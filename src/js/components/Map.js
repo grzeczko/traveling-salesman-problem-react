@@ -134,7 +134,7 @@ export default class Map extends Component {
                   <React.Fragment>
                     <div style={style} className='google-map'>
                       <GoogleMap
-                        //bootstrapURLKeys={{ key:'AIzaSyD-x50hgRfdXc3c8683x3Pv1KJIQC45DqM' }}
+                        bootstrapURLKeys={{ key:GOOGLE_MAPS_KEY }}
                         yesIWantToUseGoogleMapApiInternals={true}
                         defaultCenter={ this.props.center }
                         defaultZoom={ this.props.zoom }
