@@ -89,14 +89,38 @@ export default class Map extends Component {
 
   afterMapLoadChanges () {
     var polylines = [];
+    var firstPoints = {};
     var lastPoints = {};
     var airport = null;
     var airports = this.state.airports;
+    var markers = [];
 
     { this.state.bestOrder.map((val, i) => {
         airport = airports[val];
-        if (i > 0) {
-          const markers = [lastPoints, {lat: airport.lat, lng: airport.lng}];
+
+        if (i === 0) {
+          firstPoints = {
+            lat: airport.lat,
+            lng: airport.lng
+          };
+        } else {
+          // draw polyline between first and last coordinates
+          if (i === this.state.bestOrder.length - 1) {
+            markers = [{lat: airport.lat, lng: airport.lng}, firstPoints];
+
+            polylines.push(<div style={{display: 'none'}}>
+                   <Polyline
+                     key={this.state.bestOrder.length}
+                     id={this.state.bestOrder.length}
+                     map={this.state.map}
+                     maps={this.state.maps}
+                     markers={markers}
+                     showGeodesicPolyline={this.state.showGeodesicPolyline}
+                     showNonGeodesicPolyline={this.state.showNonGeodesicPolyline} />
+               </div>);
+          }
+
+          markers = [lastPoints, {lat: airport.lat, lng: airport.lng}];
 
           polylines.push(<div style={{display: 'none'}}>
                  <Polyline
@@ -126,7 +150,7 @@ export default class Map extends Component {
   render() {
         const style = {
           width: '100%',
-          height: '80vh',
+          height: '70vh',
           margin: '0 auto'
         }
         return this.state.airports.length
@@ -134,7 +158,7 @@ export default class Map extends Component {
                   <React.Fragment>
                     <div style={style} className='google-map'>
                       <GoogleMap
-                        bootstrapURLKeys={{ key:GOOGLE_MAPS_KEY }}
+                        //bootstrapURLKeys={{ key:GOOGLE_MAP_KEY }}
                         yesIWantToUseGoogleMapApiInternals={true}
                         defaultCenter={ this.props.center }
                         defaultZoom={ this.props.zoom }
@@ -164,6 +188,7 @@ export default class Map extends Component {
                                checked={this.state.showNonGeodesicPolyline}
                                /> Show NonGeodesic Polyline
                       </label>
+                      <span className='alert alert-danger'>Scroll down for JSON data</span>
                       <div>JSON Data: <pre>{JSON.stringify(this.state.airports, null, 2) }</pre></div>
                     </div>
                   </React.Fragment>

@@ -10,7 +10,7 @@ export default class Tsp {
     // total number of points on the map
     this.totalpoints = null;
     this.population = [];
-    this.populationDensity = 1000;
+    this.populationDensity = 2000;
     this.desirability = [];
 	}
 

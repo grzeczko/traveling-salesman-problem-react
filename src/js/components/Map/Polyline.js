@@ -7,7 +7,7 @@ export default class Polyline extends Component {
   renderPolylines () {
     const { id, markers, map, maps, showGeodesicPolyline, showNonGeodesicPolyline } = this.props
 
-    /** render geodesic polyline */
+    /** Example of rendering geodesic polyline */
     if (Polyline.geodesicPolyline[id]) {Polyline.geodesicPolyline[id].setMap(null);}
     if (showGeodesicPolyline) {
       let geodesicPolyline = new maps.Polyline({
@@ -21,7 +21,7 @@ export default class Polyline extends Component {
       Polyline.geodesicPolyline[id].setMap(map)
     }
 
-    /** render non geodesic polyline (straight line) */
+    /** Example of rendering non geodesic polyline (straight line) */
     if (Polyline.nonGeodesicPolyline[id]) {Polyline.nonGeodesicPolyline[id].setMap(null);}
     if (showNonGeodesicPolyline) {
       let nonGeodesicPolyline = new maps.Polyline({
